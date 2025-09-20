@@ -1,19 +1,10 @@
-<template>
+ <template>
   <div>
     <el-row style="margin-top: 10px">
       <el-col>
         <el-card>
           <div slot="header">
             <svg-icon class="gayhub" icon-class="github" style="float:left" @click="goToProject" />
-            <svg-icon class="dianbao" icon-class="telegram" style="float:left;margin-left: 10px"
-              @click="gotoTgChannel" />
-            <!--
-              <svg-icon class="bilibili" icon-class="bilibili" style="float:right;margin-left:10px"
-              @click="gotoBiliBili" /> -->
-            <svg-icon class="blog" icon-class="blog" style="float:right;margin-left:10px" @click="gotoBlog" />
-            <svg-icon class="youguan" icon-class="youtube" style="float:right;margin-left:10px" @click="gotoYouTuBe" />
-            <svg-icon class="channel" icon-class="telegram" style="float:right;margin-left: 10px"
-              @click="gotoTgChannel" />
             <div style="text-align:center;font-size:15px">订 阅 转 换</div>
           </div>
           <el-container>
@@ -187,55 +178,12 @@
                   icon="el-icon-copy-document" :loading="loading3">从URL解析
                 </el-button>
               </el-form-item>
-              <el-form-item label-width="0px" style="text-align: center">
-                <el-button style="width: 250px;" type="success" icon="el-icon-video-play"
-                  @click="centerDialogVisible = true">视频教程
-                </el-button>
-              </el-form-item>
-
-              <!-- 【修改】只在非深色模式下显示评论开关 -->
-              <el-form-item v-if="!isDarkMode" label-width="0px" style="margin-top: 10px; text-align: center;">
-                <el-switch
-                  v-model="showComments"
-                  active-text="显示评论区"
-                  inactive-text="隐藏评论区">
-                </el-switch>
-              </el-form-item>
-
             </el-form>
           </el-container>
         </el-card>
       </el-col>
     </el-row>
 
-    <el-row v-show="showComments" style="margin-top: 10px;">
-      <el-col>
-        <el-card>
-          <div slot="header">
-            <div style="text-align:center;font-size:15px">评 论 交 流</div>
-          </div>
-          <div id="twikoo-comment"></div>
-        </el-card>
-      </el-col>
-    </el-row>
-
-    <el-dialog title="请选择需要观看的视频教程" :visible.sync="centerDialogVisible" :show-close="false" width="40vh" top="30vh"
-      center>
-      <div label-width="0px" style="text-align: center">
-        <el-button style="width: 200px;" type="primary" icon="el-icon-video-play"
-          @click="gotoBasicVideo(); centerDialogVisible = false">基础视频教程
-        </el-button>
-      </div>
-      <div label-width="0px" style="text-align: center;margin: 3vh 0 2vh">
-        <el-button style="width: 200px;" type="danger" icon="el-icon-video-play"
-          @click="gotoAdvancedVideo(); centerDialogVisible = false">进阶视频教程
-        </el-button>
-      </div>
-      <div label-width="0px" style="text-align: center;margin: 3vh 0 2vh">
-        <el-button style="width: 200px;" type="warning" icon="el-icon-download" @click="toolsDown">代理工具集合
-        </el-button>
-      </div>
-    </el-dialog>
     <el-dialog :visible.sync="dialogUploadConfigVisible" :show-close="false" :close-on-click-modal="false"
       :close-on-press-escape="false" width="80%">
       <el-tabs v-model="activeName" type="card">
@@ -252,38 +200,6 @@
           <div style="float: right">
             <el-button type="primary" @click="uploadConfig = ''; dialogUploadConfigVisible = false">取 消</el-button>
             <el-button type="primary" @click="confirmUploadConfig" :disabled="uploadConfig.length === 0">确 定
-            </el-button>
-          </div>
-        </el-tab-pane>
-        <el-tab-pane label="JS排序节点" name="second">
-          <el-link type="success" :href="scriptConfig" style="margin-bottom: 15px" target="_blank" icon="el-icon-info">
-            参考案例
-          </el-link>
-          <el-form label-position="left">
-            <el-form-item prop="uploadScript">
-              <el-input v-model="uploadScript" placeholder="本功能暂停使用，如有兴趣，自行去我的GitHub参考sub-web-api项目部署！" type="textarea"
-                :autosize="{ minRows: 15, maxRows: 15 }" maxlength="50000" show-word-limit></el-input>
-            </el-form-item>
-          </el-form>
-          <div style="float: right">
-            <el-button type="primary" @click="uploadScript = ''; dialogUploadConfigVisible = false">取 消</el-button>
-            <el-button type="primary" @click="confirmUploadScript" :disabled="uploadScript.length === 0">确 定
-            </el-button>
-          </div>
-        </el-tab-pane>
-        <el-tab-pane label="JS筛选节点" name="third">
-          <el-link type="warning" :href="filterConfig" style="margin-bottom: 15px" target="_blank" icon="el-icon-info">
-            参考案例
-          </el-link>
-          <el-form label-position="left">
-            <el-form-item prop="uploadFilter">
-              <el-input v-model="uploadFilter" placeholder="本功能暂停使用，如有兴趣，自行去我的GitHub参考sub-web-api项目部署！" type="textarea"
-                :autosize="{ minRows: 15, maxRows: 15 }" maxlength="50000" show-word-limit></el-input>
-            </el-form-item>
-          </el-form>
-          <div style="float: right">
-            <el-button type="primary" @click="uploadFilter = ''; dialogUploadConfigVisible = false">取 消</el-button>
-            <el-button type="primary" @click="confirmUploadScript" :disabled="uploadFilter.length === 0">确 定
             </el-button>
           </div>
         </el-tab-pane>
@@ -308,44 +224,85 @@
     </el-dialog>
   </div>
 </template>
-
 <script>
 const project = process.env.VUE_APP_PROJECT
-const configScriptBackend = process.env.VUE_APP_CONFIG_UPLOAD_BACKEND + '/api.php'
 const remoteConfigSample = process.env.VUE_APP_SUBCONVERTER_REMOTE_CONFIG
-const scriptConfigSample = process.env.VUE_APP_SCRIPT_CONFIG
-const filterConfigSample = process.env.VUE_APP_FILTER_CONFIG
-const defaultBackend = process.env.VUE_APP_SUBCONVERTER_DEFAULT_BACKEND
-const shortUrlBackend = process.env.VUE_APP_MYURLS_DEFAULT_BACKEND + '/short'
-const configUploadBackend = process.env.VUE_APP_CONFIG_UPLOAD_BACKEND + '/sub.php'
-const basicVideo = process.env.VUE_APP_BASIC_VIDEO
-const advancedVideo = process.env.VUE_APP_ADVANCED_VIDEO
+const gayhubRelease = process.env.VUE_APP_BACKEND_RELEASE
+const defaultBackend = process.env.VUE_APP_SUBCONVERTER_DEFAULT_BACKEND + '/sub?'
+const shortUrlBackend = process.env.VUE_APP_MYURLS_API
+const configUploadBackend = process.env.VUE_APP_CONFIG_UPLOAD_API
 const tgBotLink = process.env.VUE_APP_BOT_LINK
-const yglink = process.env.VUE_APP_YOUTUBE_LINK
-const bzlink = process.env.VUE_APP_BILIBILI_LINK
-const blogLink = process.env.VUE_APP_BLOG_LINK
-const downld = 'http://' + window.location.host + '/download.html'
-
 export default {
   data() {
     return {
-      showComments: false,
-      twikooInitialized: false,
-      isDarkMode: false, // 【修改】新增状态
       backendVersion: "",
       centerDialogVisible: false,
       activeName: 'first',
+      // 是否为 PC 端
       isPC: true,
       btnBoolean: false,
       options: {
-        clientTypes: { Clash: "clash", "Surge4/5": "surge&ver=4", "Sing-Box": "singbox", V2Ray: "v2ray", Trojan: "trojan", ShadowsocksR: "ssr", "混合订阅（mixed）": "mixed", Surfboard: "surfboard", Quantumult: "quan", "Quantumult X": "quanx", Loon: "loon", Mellow: "mellow", Surge3: "surge&ver=3", Surge2: "surge&ver=2", ClashR: "clashr", "Shadowsocks(SIP002)": "ss", "Shadowsocks Android(SIP008)": "sssub", ShadowsocksD: "ssd", "自动判断客户端": "auto" },
-        shortTypes: { "v1.mk": "https://v1.mk/short", "d1.mk": "https://d1.mk/short", "dlj.tf": "https://dlj.tf/short", "suo.yt": "https://suo.yt/short" },
-        customBackend: { "周润发HK后端【由YXVM赞助服务】": "https://subapi.zrfme.com", "周润发US后端【Phala Cloud】": "https://1060e98895bedf43d3d738e3b7fc9120a0cbbbcf-15051.dstack-prod8.phala.network", "CM负载均衡后端【vless reality+hy1+hy2】": "https://subapi.cmliussss.net", "CM应急备用后端【vless reality+hy1+hy2】": "https://subapi.fxxk.dedyn.io", "肥羊增强型后端【vless reality+hy1+hy2】": "https://url.v1.mk", "肥羊备用后端【vless reality+hy1+hy2】": "https://sub.d1.mk", nameless13提供: "https://www.nameless13.com", subconverter作者提供: "https://sub.xeton.dev", "sub-web作者提供": "https://api.wcc.best", "920后端": "https://sub.xjz.im", "Sublink后端（歪兔）": "https://api.sublink.dev", "SoCloud 提供": "https://api.subcsub.com" },
-        backendOptions: [ { value: "https://subapi.zrfme.com" }, { value: "https://1060e98895bedf43d3d738e3b7fc9120a0cbbbcf-15051.dstack-prod8.phala.network" }, { value: "https://subapi.cmliussss.net" }, { value: "https://subapi.fxxk.dedyn.io" }, { value: "https://url.v1.mk" }, { value: "https://sub.d1.mk" }, { value: "https://www.nameless13.com" }, { value: "https://sub.xeton.dev" }, { value: "https://api.wcc.best" }, { value: "https://sub.xjz.im" }, { value: "https://api.sublink.dev" }, { value: "https://api.subcsub.com" } ],
+        clientTypes: {
+          Clash: "clash",
+          "Surge4/5": "surge&ver=4",
+          "Sing-Box": "singbox",
+          V2Ray: "v2ray",
+          Trojan: "trojan",
+          ShadowsocksR: "ssr",
+          "混合订阅（mixed）": "mixed",
+          Surfboard: "surfboard",
+          Quantumult: "quan",
+          "Quantumult X": "quanx",
+          Loon: "loon",
+          Mellow: "mellow",
+          Surge3: "surge&ver=3",
+          Surge2: "surge&ver=2",
+          ClashR: "clashr",
+          "Shadowsocks(SIP002)": "ss",
+          "Shadowsocks Android(SIP008)": "sssub",
+          ShadowsocksD: "ssd",
+          "自动判断客户端": "auto",
+        },
+        shortTypes: {
+          "096000.xyz": "https://s.096000.xyz/short",
+          "v1.mk": "https://v1.mk/short",
+          "d1.mk": "https://d1.mk/short",
+          "dlj.tf": "https://dlj.tf/short",
+          "suo.yt": "https://suo.yt/short",
+          "sub.cm": "https://sub.cm/short",
+        },
+        customBackend: {
+          "自用后端meta": "https://sub.096000.xyz/sub?",
+          "备用后端": "https://sub1.096000.xyz/sub?",
+          "本地subconverter": "http://127.0.0.1:25500",
+          "肥羊增强型后端【vless reality+hy1+hy2】": "https://api.v1.mk",
+          "肥羊备用后端【vless reality+hy1+hy2】": "https://sub.d1.mk",
+          "つつ-多地防失联【负载均衡+国内优化】": "https://api.tsutsu.one",
+          nameless13提供: "https://www.nameless13.com",
+          subconverter作者提供: "https://sub.xeton.dev",
+          "sub-web作者提供": "https://api.wcc.best",
+          "sub作者&lhie1提供": "https://api.dler.io",
+        },
+        backendOptions: [
+          {value: "https://sub.096000.xyz/sub?"},
+          {value: "https://sub1.096000.xyz/sub?"},
+          { value: "http://127.0.0.1:25500" },
+          { value: "https://api.v1.mk" },
+          { value: "https://sub.d1.mk" },
+          { value: "https://api.tsutsu.one" },
+          { value: "https://www.nameless13.com" },
+          { value: "https://sub.xeton.dev" },
+          { value: "https://api.wcc.best" },
+          { value: "https://api.dler.io" },
+        ],
         remoteConfig: [
           {
-            label: "CM规则",
+            label: "通用",
             options: [
+              {
+                label: "默认防dns污染",
+                value: "https://raw.githubusercontent.com/org100/demo/main/nodnsleak.ini"
+              },
               {
                 label: "CM_Online 默认版 识别港美地区(与Github同步)",
                 value: "https://raw.githubusercontent.com/cmliu/ACL4SSR/main/Clash/config/ACL4SSR_Online.ini"
@@ -373,43 +330,6 @@ export default {
               {
                 label: "CM_Online_Full_MultiMode_CF 识别多地区、CloudFlareCDN 负载均衡 Worker节点专用(与Github同步)",
                 value: "https://raw.githubusercontent.com/cmliu/ACL4SSR/main/Clash/config/ACL4SSR_Online_Full_MultiMode_CF.ini"
-              }
-            ]
-          },
-          {
-            label: "通用",
-            options: [
-              {
-                label: "默认",
-                value: "https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/config/ACL4SSR_Online_Full_NoAuto.ini"
-              },
-              {
-                label: "默认（自动测速）",
-                value: "https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/config/ACL4SSR_Online_Full_AdblockPlus.ini"
-              },
-              {
-                label: "默认（索尼电视专用）",
-                value: "https://raw.githubusercontent.com/youshandefeiyang/webcdn/main/SONY.ini"
-              },
-              {
-                label: "默认（附带用于 Clash 的 AdGuard DNS）",
-                value: "https://gist.githubusercontent.com/tindy2013/1fa08640a9088ac8652dbd40c5d2715b/raw/default_with_clash_adg.yml"
-              },
-              {
-                label: "ACL_全分组 Dream修改版",
-                value: "https://raw.githubusercontent.com/WC-Dream/ACL4SSR/WD/Clash/config/ACL4SSR_Online_Full_Dream.ini"
-              },
-              {
-                label: "ACL_精简分组 Dream修改版",
-                value: "https://raw.githubusercontent.com/WC-Dream/ACL4SSR/WD/Clash/config/ACL4SSR_Mini_Dream.ini"
-              },
-              {
-                label: "emby-TikTok-流媒体分组-去广告加强版",
-                value: "https://raw.githubusercontent.com/justdoiting/ClashRule/main/GeneralClashRule.ini"
-              },
-              {
-                label: "流媒体通用分组",
-                value: "https://raw.githubusercontent.com/cutethotw/ClashRule/main/GeneralClashRule.ini"
               }
             ]
           },
@@ -770,7 +690,44 @@ export default {
           }
         ]
       },
-      form: { sourceSubUrl: "", clientType: "", customBackend: this.getUrlParam() == "" ? "https://subapi.zrfme.com" : this.getUrlParam(), shortType: "https://v1.mk/short", remoteConfig: "https://raw.githubusercontent.com/cmliu/ACL4SSR/main/Clash/config/ACL4SSR_Online.ini", excludeRemarks: "", includeRemarks: "", filename: "", rename: "", devid: "", interval: "", emoji: true, nodeList: false, extraset: false, tls13: false, udp: false, xudp: false, tfo: false, sort: false, expand: true, scv: false, fdn: false, appendType: false, insert: false, new_name: true, tpl: { surge: { doh: false }, clash: { doh: false }, singbox: { ipv6: false } } },
+      form: {
+        sourceSubUrl: "",
+        clientType: "",
+        customBackend: this.getUrlParam() == "" ? "https://sub.096000.xyz" : this.getUrlParam(),
+        shortType: "https://s.096000.xyz/short",
+        remoteConfig: "https://raw.githubusercontent.com/org100/demo/main/nodnsleak.ini",
+        excludeRemarks: "",
+        includeRemarks: "",
+        filename: "",
+        rename: "",
+        devid: "",
+        interval: "",
+        emoji: true,
+        nodeList: false,
+        extraset: false,
+        tls13: false,
+        udp: false,
+        xudp: false,
+        tfo: false,
+        sort: false,
+        expand: true,
+        scv: false,
+        fdn: false,
+        appendType: false,
+        insert: false, // 是否插入默认订阅的节点，对应配置项 insert_url
+        new_name: true, // 是否使用 Clash 新字段
+        tpl: {
+          surge: {
+            doh: false // dns 查询是否使用 DoH
+          },
+          clash: {
+            doh: false
+          },
+          singbox: {
+            ipv6: false
+          }
+        }
+      },
       loading1: false,
       loading2: false,
       loading3: false,
@@ -783,38 +740,17 @@ export default {
       uploadScript: "",
       uploadConfig: "",
       myBot: tgBotLink,
-      filterConfig: filterConfigSample,
-      scriptConfig: scriptConfigSample,
+      // filterConfig: filterConfigSample,
+      // scriptConfig: scriptConfigSample,
       sampleConfig: remoteConfigSample
     };
   },
-
-  watch: {
-    showComments(newValue) {
-      if (newValue === true && !this.twikooInitialized) {
-        this.$nextTick(() => {
-          const currentTheme = document.body.className.includes('dark-mode') ? 'dark' : 'light';
-          try {
-            twikoo.init({
-              envId: 'https://twikoo.zrf.me',
-              el: '#twikoo-comment',
-              lang: 'zh-CN',
-              theme: currentTheme
-            });
-            this.twikooInitialized = true;
-          } catch (e) {
-            console.error("Twikoo initialization failed:", e);
-          }
-        });
-      }
-    }
-  },
-
   created() {
-    document.title = "ZRF.ME | 在线订阅转换工具";
+    document.title = "在线订阅转换工具";
     this.isPC = this.$getOS().isPc;
   },
   mounted() {
+    // this.tanchuang();
     this.form.clientType = "clash";
     this.getBackendVersion();
     this.anhei();
@@ -828,9 +764,15 @@ export default {
     if (typeof darkMedia.addEventListener === 'function' || typeof lightMedia.addEventListener === 'function') {
       lightMedia.addEventListener('change', callback);
       darkMedia.addEventListener('change', callback);
-    }
+    } //监听系统主题，自动切换！
   },
   methods: {
+    gotoGayhub() {
+      window.open(gayhubRelease);
+    },
+    goToProject() {
+      window.open(project);
+    },
     selectChanged() {
       this.getBackendVersion();
     },
@@ -851,88 +793,34 @@ export default {
       const darkMode = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)');
       if (getLocalTheme) {
         document.getElementsByTagName('body')[0].className = getLocalTheme;
-      }
+      } //读取localstorage，优先级最高！
       else if (getLocalTheme == null || getLocalTheme == "undefined" || getLocalTheme == "") {
         if (new Date().getHours() >= 19 || new Date().getHours() < 7) {
           document.getElementsByTagName('body')[0].setAttribute('class', 'dark-mode');
         } else {
           document.getElementsByTagName('body')[0].setAttribute('class', 'light-mode');
-        }
+        } //根据当前时间来判断，用来对付QQ等不支持媒体变量查询的浏览器
         if (lightMode && lightMode.matches) {
           document.getElementsByTagName('body')[0].setAttribute('class', 'light-mode');
         }
         if (darkMode && darkMode.matches) {
           document.getElementsByTagName('body')[0].setAttribute('class', 'dark-mode');
-        }
+        } //根据窗口主题来判断当前主题！
       }
-      // 【修改】同步 isDarkMode 状态
-      this.isDarkMode = document.getElementsByTagName('body')[0].className === 'dark-mode';
     },
     change() {
       var zhuti = document.getElementsByTagName('body')[0].className;
       if (zhuti === 'light-mode') {
         document.getElementsByTagName('body')[0].setAttribute('class', 'dark-mode');
         window.localStorage.setItem('localTheme', 'dark-mode');
-        // 【修改】更新状态并强制关闭评论
-        this.isDarkMode = true;
-        this.showComments = false;
       }
       if (zhuti === 'dark-mode') {
         document.getElementsByTagName('body')[0].setAttribute('class', 'light-mode');
         window.localStorage.setItem('localTheme', 'light-mode');
-        // 【修改】更新状态
-        this.isDarkMode = false;
       }
-    },
-    tanchuang() {
-      this.$alert(`<div style="text-align:center; font-size: 16px;"><strong>周润发 | 提供维护:</strong> <a href="https://d.zrf.me/tgq" target="_blank" style="color: #409EFF; text-decoration: none;">TG群组</a> <a href="https://d.zrf.me/blog" target="_blank" style="color: #409EFF; text-decoration: none;">Blog</a></div>`, '信息面板', {
-        confirmButtonText: '确定',
-        dangerouslyUseHTMLString: true,
-        customClass: 'msgbox'
-      });
     },
     onCopy() {
       this.$message.success("已复制");
-    },
-    goToProject() {
-      window.open(project);
-    },
-    gotoTgChannel() {
-      window.open(tgBotLink);
-    },
-    gotoBiliBili() {
-      window.open(bzlink);
-    },
-    gotoYouTuBe() {
-      window.open(yglink);
-    },
-    gotoBlog() {
-      window.open(blogLink);
-    },
-    toolsDown() {
-      window.open(downld);
-    },
-    gotoBasicVideo() {
-      this.$alert("别忘了关注友善的肥羊哦！", {
-        type: "warning",
-        confirmButtonText: '确定',
-        customClass: 'msgbox',
-        showClose: false,
-      })
-        .then(() => {
-          window.open(basicVideo);
-        });
-    },
-    gotoAdvancedVideo() {
-      this.$alert("别忘了关注友善的肥羊哦！", {
-        type: "warning",
-        confirmButtonText: '确定',
-        customClass: 'msgbox',
-        showClose: false,
-      })
-        .then(() => {
-          window.open(advancedVideo);
-        });
     },
     makeUrl() {
       if (this.form.sourceSubUrl === "" || this.form.clientType === "") {
@@ -1129,10 +1017,13 @@ export default {
         if (param.get("target")) {
           let target = param.get("target");
           if (target === 'surge' && param.get("ver")) {
+            // 类型为surge,有ver
             this.form.clientType = target + "&ver=" + param.get("ver");
           } else if (target === 'surge') {
+            //类型为surge,没有ver
             this.form.clientType = target + "&ver=4"
           } else {
+            //类型为其他
             this.form.clientType = target;
           }
         }
@@ -1243,65 +1134,58 @@ export default {
       let data = this.renderPost();
       data.append("sortscript", encodeURIComponent(this.uploadScript));
       data.append("filterscript", encodeURIComponent(this.uploadFilter));
-      this.$axios
-        .post(configScriptBackend, data, {
-          header: {
-            "Content-Type": "application/form-data; charset=utf-8"
-          }
-        })
-        .then(res => {
-          if (res.data.code === 0 && res.data.data !== "") {
-            this.$message.success(
-              "自定义JS上传成功，订阅链接已复制到剪贴板（IOS设备和Safari浏览器不支持自动复制API，需手动点击复制按钮）"
-            );
-            this.customSubUrl = res.data.data;
-            this.$copyText(res.data.data);
-            this.dialogUploadConfigVisible = false;
-            this.btnBoolean = true;
-          } else {
-            this.$message.error("自定义JS上传失败: " + res.data.msg);
-          }
-        })
-        .catch(() => {
-          this.$message.error("自定义JS上传失败");
-        })
-        .finally(() => {
-          this.loading2 = false;
-        })
+      // this.$axios
+      //   .post(configScriptBackend, data, {
+      //     header: {
+      //       "Content-Type": "application/form-data; charset=utf-8"
+      //     }
+      //   })
+      //   .then(res => {
+      //     if (res.data.code === 0 && res.data.data !== "") {
+      //       this.$message.success(
+      //         "自定义JS上传成功，订阅链接已复制到剪贴板（IOS设备和Safari浏览器不支持自动复制API，需手动点击复制按钮）"
+      //       );
+      //       this.customSubUrl = res.data.data;
+      //       this.$copyText(res.data.data);
+      //       this.dialogUploadConfigVisible = false;
+      //       this.btnBoolean = true;
+      //     } else {
+      //       this.$message.error("自定义JS上传失败: " + res.data.msg);
+      //     }
+      //   })
+      //   .catch(() => {
+      //     this.$message.error("自定义JS上传失败");
+      //   })
+      //   .finally(() => {
+      //     this.loading2 = false;
+      //   })
     },
     getBackendVersion() {
-      this.$axios
-        .get(
-          this.form.customBackend + "/version"
-        )
+    this.$axios
+        .get(this.form.customBackend + "/version")
         .then(res => {
-          this.backendVersion = res.data.replace(/backend\n$/gm, "");
-          this.backendVersion = this.backendVersion.replace("subconverter", "SubConverter");
-          let a = this.form.customBackend.indexOf("url.v1.mk") !== -1 || this.form.customBackend.indexOf("sub.d1.mk") !== -1;
-          let b = this.form.customBackend.indexOf("127.0.0.1") !== -1;
-          a ? this.$message.success(`${this.backendVersion}` + "肥羊负载均衡增强版后端，已屏蔽免费节点池（会返回403），额外支持vless reality+hysteria+hysteria2订阅转换") : b ? this.$message.success(`${this.backendVersion}` + "本地局域网自建版后端") : this.$message.success(`${this.backendVersion}`);
+            // 清洗和处理返回的版本信息
+            this.backendVersion = res.data.replace(/backend\n$/gm, "");
+            this.backendVersion = this.backendVersion.replace("subconverter", "SubConverter");
+
+            // 判断 customBackend 中是否包含指定的字样
+            let a = this.form.customBackend.includes("sub.096000.xyz");
+            let b = this.form.customBackend.includes("sub1.096000.xyz");
+            let c = this.form.customBackend.includes("127.0.0.1");
+
+            // 使用三元运算符进行条件判断和消息拼接
+            this.$message.success(
+                a ? `${this.form.customBackend}（${this.backendVersion}） 自建后端，放心使用，支持Hysteria2, Hysteria, Vless (reality), Tuic, anyTLS, mieru for clash, stash and singbox订阅转换` :
+                b ? `${this.form.customBackend}（${this.backendVersion}） 肥羊负载均衡增强版后端，已屏蔽免费节点池（会返回403），额外支持vless reality+hysteria+hysteria2订阅转换` :
+                c ? `${this.form.customBackend}（${this.backendVersion}） 本地局域网自建版后端` :
+                `${this.form.customBackend}（${this.backendVersion}） 其他后端可能不支持vless/hysteria订阅转换`
+            );
         })
         .catch(() => {
-          this.$message.error("请求SubConverter版本号返回数据失败，该后端不可用！");
+            // 错误消息使用三元运算符
+            this.$message.error(`${this.form.customBackend} 请求SubConverter版本号返回数据失败，该后端不可用！`);
         });
-    }
+     }
   }
 };
 </script>
-
-<style>
-/* 修正 Twikoo 在 el-card 内的样式 */
-#twikoo-comment .tk-main {
-  background-color: transparent !important;
-}
-
-/* 
-  新增：彻底隐藏图片上传功能相关的两个元素
-  1. 隐藏图片上传的图标按钮
-  2. 隐藏备用的 "选择文件" 输入框
-*/
-.tk-submit-action-icon[title="图片"],
-.tk-input-image {
-  display: none !important;
-}
-</style>
