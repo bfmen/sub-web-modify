@@ -252,6 +252,7 @@ export default {
           "Shadowsocks Android(SIP008)": "sssub",
           "SSD": "ssd",
           "SSR": "ssr",
+          "Surfboard": "surfboard",
           "Surge2": "surge&ver=2",
           "Surge3": "surge&ver=3",
           "Surge4": "surge&ver=4",
@@ -262,7 +263,6 @@ export default {
           "Trojan": "trojan",
           "ShadowsocksR": "ssr",
           "混合订阅（mixed）": "mixed",
-          "Surfboard": "surfboard",
           "Mellow": "mellow",
           "自动判断客户端": "auto",
         },
@@ -1194,6 +1194,7 @@ export default {
   }
 };
 </script>
+
 
 
 
