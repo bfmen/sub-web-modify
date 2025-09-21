@@ -292,6 +292,8 @@ export default {
           { value: "https://api.v1.mk" },
           { value: "https://sub.d1.mk" },
           { value: "https://api.tsutsu.one" },
+          { value: "https://subapi.cmliussss.net" },
+          { value: "https://subapi.fxxk.dedyn.io" },
           { value: "https://www.nameless13.com" },
           { value: "https://sub.xeton.dev" },
           { value: "https://api.wcc.best" },
@@ -1177,8 +1179,7 @@ export default {
 
             // 使用三元运算符进行条件判断和消息拼接
             this.$message.success(
-                a ? `${this.form.customBackend}（${this.backendVersion}） 自建后端，放心使用，支持Hysteria2, Hysteria, Vless (reality), Tuic, anyTLS, mieru for clash, stash and singbox订阅转换` :
-                b ? `${this.form.customBackend}（${this.backendVersion}） 肥羊负载均衡增强版后端，已屏蔽免费节点池（会返回403），额外支持vless reality+hysteria+hysteria2订阅转换` :
+                (a || b) ? `${this.form.customBackend}（${this.backendVersion}） 自建后端，放心使用，支持Hysteria2, Hysteria, Vless (reality), Tuic, anyTLS, mieru for clash, stash and singbox订阅转换` :
                 c ? `${this.form.customBackend}（${this.backendVersion}） 本地局域网自建版后端` :
                 `${this.form.customBackend}（${this.backendVersion}） 其他后端可能不支持vless/hysteria订阅转换`
             );
@@ -1191,5 +1192,6 @@ export default {
   }
 };
 </script>
+
 
 
