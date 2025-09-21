@@ -257,7 +257,7 @@ export default {
           "Surge4": "surge&ver=4",
           "Surge5": "surge&ver=5",
           "V2Ray": "v2ray",
-          "Telegram-liked HTTP/Socks 5 links	": "Only as source",
+          "Telegram-liked HTTP/Socks 5 links": "Only as source",
           "Sing-Box": "singbox",
           "Trojan": "trojan",
           "ShadowsocksR": "ssr",
@@ -1194,6 +1194,7 @@ export default {
   }
 };
 </script>
+
 
 
 
