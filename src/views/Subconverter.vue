@@ -243,24 +243,27 @@ export default {
       btnBoolean: false,
       options: {
         clientTypes: {
-          Clash: "clash",
-          "Surge4/5": "surge&ver=4",
-          "Sing-Box": "singbox",
-          V2Ray: "v2ray",
-          Trojan: "trojan",
-          ShadowsocksR: "ssr",
-          "混合订阅（mixed）": "mixed",
-          Surfboard: "surfboard",
-          Quantumult: "quan",
+          "Clash": "clash",
+          "ClashR": "clashr",
+          "Quantumult": "quan",
           "Quantumult X": "quanx",
-          Loon: "loon",
-          Mellow: "mellow",
-          Surge3: "surge&ver=3",
-          Surge2: "surge&ver=2",
-          ClashR: "clashr",
+          "Loon": "loon",
           "Shadowsocks(SIP002)": "ss",
           "Shadowsocks Android(SIP008)": "sssub",
-          ShadowsocksD: "ssd",
+          "SSD": "ssd",
+          "SSR": "ssr",
+          "Surge2": "surge&ver=2",
+          "Surge3": "surge&ver=3",
+          "Surge4": "surge&ver=4",
+          "Surge5": "surge&ver=5",
+          "V2Ray": "v2ray",
+          "Telegram-liked HTTP/Socks 5 links	": "Only as source",
+          "Sing-Box": "singbox",
+          "Trojan": "trojan",
+          "ShadowsocksR": "ssr",
+          "混合订阅（mixed）": "mixed",
+          "Surfboard": "surfboard",
+          "Mellow": "mellow"
           "自动判断客户端": "auto",
         },
         shortTypes: {
@@ -1191,6 +1194,7 @@ export default {
   }
 };
 </script>
+
 
 
 
