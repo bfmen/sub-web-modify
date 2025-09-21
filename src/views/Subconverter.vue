@@ -263,7 +263,7 @@ export default {
           "ShadowsocksR": "ssr",
           "混合订阅（mixed）": "mixed",
           "Surfboard": "surfboard",
-          "Mellow": "mellow"
+          "Mellow": "mellow",
           "自动判断客户端": "auto",
         },
         shortTypes: {
@@ -1194,6 +1194,7 @@ export default {
   }
 };
 </script>
+
 
 
 
