@@ -272,8 +272,8 @@ export default {
           "sub.cm": "https://sub.cm/short",
         },
         customBackend: {
-          "自用后端meta": "https://sub.096000.xyz/sub?",
-          "备用后端": "https://sub1.096000.xyz/sub?",
+          "自用后端meta": "https://sub.096000.xyz",
+          "备用后端": "https://sub1.096000.xyz",
           "本地subconverter": "http://127.0.0.1:25500",
           "肥羊增强型后端【vless reality+hy1+hy2】": "https://api.v1.mk",
           "肥羊备用后端【vless reality+hy1+hy2】": "https://sub.d1.mk",
@@ -286,8 +286,8 @@ export default {
           "sub作者&lhie1提供": "https://api.dler.io",
         },
         backendOptions: [
-          {value: "https://sub.096000.xyz/sub?"},
-          {value: "https://sub1.096000.xyz/sub?"},
+          { value: "https://sub.096000.xyz" },
+          { value: "https://sub1.096000.xyz" },
           { value: "http://127.0.0.1:25500" },
           { value: "https://api.v1.mk" },
           { value: "https://sub.d1.mk" },
@@ -1191,4 +1191,5 @@ export default {
   }
 };
 </script>
+
 
